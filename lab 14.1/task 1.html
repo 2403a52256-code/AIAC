@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>koushik - Portfolio</title>
+  <style>
+    :root {
+      --color-primary: #006d77;     /* teal blue */
+      --color-accent: #ffb703;      /* warm yellow */
+      --color-background: #f7f7f7;  /* soft off-white */
+      --heading-font: 'Playfair Display', serif;
+      --body-font: 'Roboto', Arial, sans-serif;
+      --max-width: 900px;
+
+      /* Breakpoints */
+      --breakpoint-tablet: 700px;
+      --breakpoint-desktop: 1000px;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--color-background);
+    }
+    body {
+      margin: 0;
+      font-family: var(--body-font);
+      color: #222;
+      background: var(--color-background);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--color-primary);
+      color: #fff;
+      padding: 1rem 0.5rem 0.5rem 0.5rem;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .nav-list {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .nav-list li {
+      position: relative;
+    }
+    .nav-list a {
+      font-family: var(--body-font);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.25em 0.5em;
+      border-radius: 3px;
+      transition: background 0.2s, color 0.2s;
+      outline: none;
+    }
+    .nav-list a:focus,
+    .nav-list a:hover {
+      background: var(--color-accent);
+      color: #222;
+    }
+    .site-title {
+      text-align: center;
+      font-family: var(--heading-font);
+      font-size: 2rem;
+      letter-spacing: 2px;
+      margin: 0.5em 0 0.3em 0;
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    section {
+      background: #fff;
+      border-radius: .75rem;
+      box-shadow: 0 2px 10px 0 #0001;
+      padding: 1.3rem 1rem;
+    }
+    section:target {
+      outline: 2.5px solid var(--color-accent);
+    }
+
+    h1, h2, h3 {
+      font-family: var(--heading-font);
+      color: var(--color-primary);
+      margin-top: 0;
+      margin-bottom: .6em;
+    }
+
+    .about-me__bio {
+      font-size: 1.09rem;
+      font-family: var(--body-font);
+      margin-top: 0;
+    }
+
+    /* Projects */
+    .projects-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--color-background);
+      border-radius: .5rem;
+      overflow: hidden;
+      box-shadow: 0 1px 6px 0 #0001;
+      transition: box-shadow 0.2s;
+    }
+    .project-card:focus-within,
+    .project-card:hover {
+      box-shadow: 0 4px 15px 0 #0003;
+    }
+    .project-image {
+      background: #b7e4c7;
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+    .project-info {
+      padding: 1rem;
+    }
+    .project-title {
+      font-size: 1.1rem;
+      margin: 0;
+      font-family: var(--heading-font);
+      color: var(--color-primary);
+    }
+    .project-desc {
+      color: #333;
+      margin: .7em 0 0 0;
+      font-size: 1rem;
+      font-family: var(--body-font);
+    }
+    .project-link {
+      display: inline-block;
+      margin-top: .8em;
+      color: var(--color-accent);
+      font-weight: 500;
+      text-decoration: underline;
+      font-family: var(--body-font);
+      outline: none;
+    }
+    .project-link:focus,
+    .project-link:hover {
+      color: var(--color-primary);
+      background: var(--color-accent);
+      text-decoration: none;
+      border-radius: 2px;
+      padding: 0 0.2em;
+    }
+
+    /* Contact */
+    .contact-info {
+      margin-bottom: 1em;
+    }
+    .contact-link {
+      color: var(--color-primary);
+      text-decoration: underline;
+      font-family: var(--body-font);
+      font-weight: 500;
+      outline: none;
+    }
+    .contact-link:focus,
+    .contact-link:hover {
+      color: var(--color-accent);
+      background: var(--color-primary);
+      text-decoration: none;
+      border-radius: 2px;
+      padding: 0 0.2em;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 480px;
+    }
+    .contact-form label {
+      font-family: var(--body-font);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-primary);
+    }
+    .contact-form input,
+    .contact-form textarea {
+      font-family: var(--body-font);
+      font-size: 1rem;
+      border: 1px solid #aaa;
+      border-radius: 0.3em;
+      padding: .7em 1em;
+      margin-top: 0.2em;
+      resize: vertical;
+      transition: border 0.2s;
+      background: #fff;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border: 2px solid var(--color-accent);
+      outline: none;
+    }
+    .contact-form button {
+      padding: 0.7em 1.8em;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.3em;
+      color: #fff;
+      background: var(--color-primary);
+      font-family: var(--body-font);
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      margin-top: .2em;
+      outline: none;
+    }
+    .contact-form button:focus,
+    .contact-form button:hover {
+      background: var(--color-accent);
+      color: #222;
+    }
+
+    /* Responsive queries */
+    @media (min-width: 700px) {
+      main {
+        padding: 2.5rem 2rem;
+      }
+      .projects-list {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (min-width: 1000px) {
+      .projects-list {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      main {
+        gap: 3rem;
+      }
+      header {
+        padding: 1.3rem 0;
+      }
+    }
+    /* Visually Hidden Utility for accessibility */
+    .visually-hidden {
+      border: 0 !important;
+      clip: rect(1px, 1px, 1px, 1px) !important;
+      -webkit-clip-path: inset(50%) !important;
+      clip-path: inset(50%) !important;
+      height: 1px !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      padding: 0 !important;
+      position: absolute !important;
+      width: 1px !important;
+      white-space: nowrap !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="site-title" tabindex="0">koushik</div>
+    <nav aria-label="Main navigation">
+      <ul class="nav-list">
+        <li><a href="#about" tabindex="0">About Me</a></li>
+        <li><a href="#projects" tabindex="0">Projects</a></li>
+        <li><a href="#contact" tabindex="0">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="about" tabindex="-1" aria-labelledby="about-heading">
+      <h2 id="about-heading">About Me</h2>
+      <p class="about-me__bio">
+        Hi! I'm <b>koushik</b>, a passionate web developer and designer based in Cityville. I enjoy building accessible and beautiful web experiences, with an eye for color and typography.<br>
+        My expertise includes HTML, CSS, and JavaScript, and I thrive on turning creative ideas into interactive web projects. Let's make the web better—together!
+      </p>
+    </section>
+
+    <section id="projects" tabindex="-1" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+      <ul class="projects-list">
+        <li class="project-card" tabindex="0">
+          <img src="https://placehold.co/400x225/006d77/fff?text=Project+1" alt="Project 1 screenshot" class="project-image">
+          <div class="project-info">
+            <h3 class="project-title">Portfolio Website</h3>
+            <p class="project-desc">
+              A sleek, responsive portfolio template built with CSS Grid and custom color themes. Designed for accessibility and smooth navigation.
+            </p>
+            <a href="#" class="project-link" tabindex="0">View More</a>
+          </div>
+        </li>
+        <li class="project-card" tabindex="0">
+          <img src="https://placehold.co/400x225/ffb703/222?text=Project+2" alt="Project 2 screenshot" class="project-image">
+          <div class="project-info">
+            <h3 class="project-title">Task Tracker App</h3>
+            <p class="project-desc">
+              A minimalist task manager built in vanilla JS, featuring a responsive dashboard and local storage support for persistent tasks.
+            </p>
+            <a href="#" class="project-link" tabindex="0">View More</a>
+          </div>
+        </li>
+        <li class="project-card" tabindex="0">
+          <img src="https://placehold.co/400x225/f7f7f7/006d77?text=Project+3" alt="Project 3 screenshot" class="project-image">
+          <div class="project-info">
+            <h3 class="project-title">Photo Gallery</h3>
+            <p class="project-desc">
+              An image gallery showcasing beautiful photography, with CSS flexbox layouts and lightbox modal for larger previews.
+            </p>
+            <a href="#" class="project-link" tabindex="0">View More</a>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="contact" tabindex="-1" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact</h2>
+      <div class="contact-info">
+        <p>
+          <span>Email me:</span>
+          <a href="mailto:jane.doe@email.com" class="contact-link" tabindex="0">jane.doe@email.com</a>
+        </p>
+      </div>
+      <form class="contact-form" action="#" method="post" autocomplete="on" novalidate>
+        <label for="name">Name:</label>
+        <input id="name" name="name" type="text" required autocomplete="name" tabindex="0">
+
+        <label for="email">Email:</label>
+        <input id="email" name="email" type="email" required autocomplete="email" tabindex="0">
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required tabindex="0"></textarea>
+
+        <button type="submit" tabindex="0">Send Message</button>
+      </form>
+    </section>
+  </main>
+  <footer style="max-width: var(--max-width); margin: 2rem auto 0 auto; text-align:center; font-size:.97em; color:#888; padding:1rem;">
+    &copy; 2024 Jane Doe. Built with <span aria-label="love" role="img">💖</span>
+  </footer>
+  <script>
+    // Smooth scrolling and focus for accessibility
+    document.querySelectorAll('.nav-list a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const hash = this.getAttribute('href');
+        if (!hash.startsWith('#')) return;
+        const section = document.querySelector(hash);
+        if (section) {
+          e.preventDefault();
+          section.scrollIntoView({ behavior: 'smooth' });
+          // Delay focusing element for smooth scroll
+          setTimeout(() => section.focus(), 500);
+          // Optionally update URL hash
+          history.replaceState(null, null, hash);
+        }
+      });
+    });
+    // Keyboard navigation highlight: highlight nav if section is focused
+    document.querySelectorAll('section').forEach(section => {
+      section.addEventListener('focus', function() {
+        const id = section.getAttribute('id');
+        document.querySelectorAll('.nav-list a').forEach(a => {
+          a.classList.toggle('nav-active', a.getAttribute('href') === '#' + id);
+        });
+      });
+      section.addEventListener('blur', function() {
+        document.querySelectorAll('.nav-list a').forEach(a => a.classList.remove('nav-active'));
+      });
+    });
+    // Keyboard accessibility for nav: Enter/Space simulate click
+    document.querySelectorAll('.nav-list a').forEach(link => {
+      link.addEventListener('keydown', function(e) {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          link.click();
+        }
+      });
+    });
+    // Prevent default form submission, show a mock alert
+    document.querySelector('.contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you for your message! (This is a mock contact form.)');
+      this.reset();
+    });
+  </script>
+</body>
+</html>

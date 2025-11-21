@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Event Registration Form</title>
+  <style>
+    :root {
+      --primary: #006d77;
+      --accent: #ffb703;
+      --bg: #f7f7f7;
+      --text: #222;
+      --error: #c0392b;
+      --radius: 0.55em;
+      --shadow: 0 3px 16px rgba(0,0,0,0.08);
+      --font-heading: 'Playfair Display', serif;
+      --font-body: 'Roboto', Arial, sans-serif;
+      --width: 420px;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      font-family: var(--font-body);
+      margin: 0;
+      padding: 0;
+      color: var(--text);
+    }
+    .registration-container {
+      background: #fff;
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      max-width: var(--width);
+      width: 100%;
+      margin: 1.5rem;
+      padding: 2rem 2.2rem 1.3rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .registration-container h1 {
+      font-family: var(--font-heading);
+      font-size: 1.7rem;
+      margin-bottom: 1.2rem;
+      color: var(--primary);
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 1.3rem;
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: 500;
+      margin-bottom: 0.42em;
+      color: #383838;
+      font-size: 1.04em;
+    }
+    input[type="text"],
+    input[type="email"],
+    select {
+      font-family: var(--font-body);
+      font-size: 1.07em;
+      padding: 0.49em 0.7em;
+      border-radius: 0.33em;
+      border: 1.5px solid #cfdde9;
+      transition: border 0.2s;
+      outline: none;
+      background: #fafdff;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus {
+      border: 1.5px solid var(--primary);
+    }
+    .session-options {
+      display: flex;
+      gap: 1.5em;
+      margin-top: 0.35em;
+    }
+    .session-radio-label {
+      font-weight: normal;
+      font-size: 1em;
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+    }
+    input[type="radio"] {
+      accent-color: var(--primary);
+      margin-right: 0.35em;
+    }
+    .error-message {
+      color: var(--error);
+      font-size: 0.97em;
+      margin-top: 0.21em;
+      font-weight: 500;
+      min-height: 1.4em;
+      aria-live: polite;
+      transition: color 0.2s;
+    }
+    button[type="submit"] {
+      padding: 0.65em 1.4em;
+      font-size: 1.09em;
+      border: none;
+      border-radius: 0.32em;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      margin-top: 0.4em;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background 0.2s, color 0.2s;
+    }
+    button[type="submit"]:hover,
+    button[type="submit"]:focus {
+      background: var(--accent);
+      color: var(--text);
+      outline: none;
+    }
+    .success-message {
+      color: #158467;
+      background: #e7f9f3;
+      border-radius: 0.38em;
+      padding: 0.8em 1em;
+      font-size: 1.08em;
+      text-align: center;
+      margin-bottom: 1.1em;
+      border: 1.5px solid #b5efdf;
+      display: none;
+    }
+
+    @media (max-width: 540px) {
+      .registration-container {
+        padding: 1.2rem 0.7rem;
+      }
+      .registration-container h1 {
+        font-size: 1.19rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="registration-container" role="main" aria-labelledby="form-title">
+    <h1 id="form-title">Register for the Event</h1>
+    <div id="success-msg" class="success-message" role="status" aria-live="polite"></div>
+    <form id="registration-form" novalidate aria-describedby="form-description">
+      <div id="form-description" class="visually-hidden">
+        Please provide your name, email, phone, and select which session to attend.
+      </div>
+      <div class="form-group">
+        <label for="name">Full Name <span aria-hidden="true" style="color: var(--error)">*</span></label>
+        <input type="text" id="name" name="name" aria-required="true" required autocomplete="name" />
+        <span class="error-message" id="name-error" aria-live="polite"></span>
+      </div>
+      <div class="form-group">
+        <label for="email">Email <span aria-hidden="true" style="color: var(--error)">*</span></label>
+        <input type="email" id="email" name="email" aria-required="true" required autocomplete="email" />
+        <span class="error-message" id="email-error" aria-live="polite"></span>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone <span aria-hidden="true" style="color: var(--error)">*</span></label>
+        <input type="text" id="phone" name="phone" inputmode="tel" aria-required="true" required autocomplete="tel" pattern="[0-9]{10,15}" maxlength="15" />
+        <span class="error-message" id="phone-error" aria-live="polite"></span>
+      </div>
+      <div class="form-group" id="session-fieldset">
+        <label>Session <span aria-hidden="true" style="color: var(--error)">*</span></label>
+        <div class="session-options" role="radiogroup" aria-labelledby="session-label">
+          <span id="session-label" class="visually-hidden">Session options</span>
+          <label class="session-radio-label">
+            <input type="radio" name="session" value="morning" required aria-required="true" /> Morning Session
+          </label>
+          <label class="session-radio-label">
+            <input type="radio" name="session" value="afternoon" required aria-required="true" /> Afternoon Session
+          </label>
+          <label class="session-radio-label">
+            <input type="radio" name="session" value="evening" required aria-required="true" /> Evening Session
+          </label>
+        </div>
+        <span class="error-message" id="session-error" aria-live="polite"></span>
+      </div>
+      <button type="submit" aria-label="Submit registration">Register</button>
+    </form>
+  </div>
+  <style>
+    .visually-hidden {
+      position: absolute !important;
+      height: 1px; width: 1px;
+      overflow: hidden;
+      clip: rect(1px,1px,1px,1px);
+      white-space: nowrap;
+      border: 0 !important;
+      padding: 0 !important;
+      margin: -1px !important;
+    }
+  </style>
+  <script>
+    // Validation Functions
+    function validateName(name) {
+      return name.trim() !== '';
+    }
+
+    function validateEmail(email) {
+      // Simple RFC 5322-compliant pattern (not perfect, but robust for practical use)
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    }
+
+    function validatePhone(phone) {
+      const digits = phone.replace(/\D/g, '');
+      return /^\d{10,15}$/.test(digits);
+    }
+
+    function validateSession(form) {
+      return !!form.querySelector('input[name="session"]:checked');
+    }
+
+    // Inline Error Management
+    function showError(id, message) {
+      document.getElementById(id).textContent = message;
+    }
+    function clearError(id) {
+      document.getElementById(id).textContent = '';
+    }
+
+    // Form and Field Handling
+    const form = document.getElementById('registration-form');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const sessionError = document.getElementById('session-error');
+    const successMsg = document.getElementById('success-msg');
+
+    // Accessibility: Focus first errored field
+    function focusFirstError(fieldsWithError) {
+      if (fieldsWithError.length > 0) {
+        const field = fieldsWithError[0];
+        if (field && typeof field.focus === 'function') field.focus();
+      }
+    }
+
+    // Validate on submit
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+      let errors = [];
+      
+      // Name
+      if (!validateName(nameInput.value)) {
+        showError('name-error', 'Name is required.');
+        errors.push(nameInput);
+        valid = false;
+      } else {
+        clearError('name-error');
+      }
+      // Email
+      if (!validateEmail(emailInput.value)) {
+        showError('email-error', 'Please enter a valid email address.');
+        errors.push(emailInput);
+        valid = false;
+      } else {
+        clearError('email-error');
+      }
+      // Phone
+      if (!validatePhone(phoneInput.value)) {
+        showError('phone-error', 'Enter a valid phone number (10-15 digits).');
+        errors.push(phoneInput);
+        valid = false;
+      } else {
+        clearError('phone-error');
+      }
+      // Session
+      if (!validateSession(form)) {
+        showError('session-error', 'Please select a session.');
+        const radios = form.querySelectorAll('input[name="session"]');
+        errors.push(radios.length ? radios[0] : null);
+        valid = false;
+      } else {
+        clearError('session-error');
+      }
+      if (!valid) {
+        successMsg.style.display = 'none';
+        focusFirstError(errors);
+        return false;
+      }
+
+      // If form is valid
+      successMsg.textContent = 'Registration successful! Thank you for signing up.';
+      successMsg.style.display = 'block';
+      form.reset();
+    });
+
+    // Inline validation (on blur)
+    nameInput.addEventListener('blur', () => {
+      if (!validateName(nameInput.value)) {
+        showError('name-error', 'Name is required.');
+      } else {
+        clearError('name-error');
+      }
+    });
+    emailInput.addEventListener('blur', () => {
+      if (!validateEmail(emailInput.value)) {
+        showError('email-error', 'Please enter a valid email address.');
+      } else {
+        clearError('email-error');
+      }
+    });
+    phoneInput.addEventListener('blur', () => {
+      if (!validatePhone(phoneInput.value)) {
+        showError('phone-error', 'Enter a valid phone number (10-15 digits).');
+      } else {
+        clearError('phone-error');
+      }
+    });
+    // Inline validation for session radio
+    form.querySelectorAll('input[name="session"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        if (!validateSession(form)) {
+          showError('session-error', 'Please select a session.');
+        } else {
+          clearError('session-error');
+        }
+      });
+    });
+
+    /* ==========================
+       Simple JS Unit Tests
+    ========================== */
+    function assertEquals(desc, received, expected) {
+      if (received === expected) {
+        console.log(`✅ ${desc}: PASS`);
+      } else {
+        console.error(`❌ ${desc}: FAIL\n  Expected: ${expected}\n  Received: ${received}`);
+      }
+    }
+    // Test Cases
+    (function testValidationFunctions() {
+      // 1. Name validation
+      assertEquals("validateName non-empty", validateName('Alice'), true);
+      assertEquals("validateName empty", validateName('   '), false);
+
+      // 2. Email validation
+      assertEquals("validateEmail good", validateEmail('test@example.com'), true);
+      assertEquals("validateEmail bad", validateEmail('bad@email'), false);
+
+      // 3. Phone validation
+      assertEquals("validatePhone 10 digits", validatePhone('9876543210'), true);
+      assertEquals("validatePhone letters", validatePhone('callme123'), false);
+      assertEquals("validatePhone short", validatePhone('1234'), false);
+
+      // 4. Session validation (requires DOM, so we do a minimal DOM check)
+      // For this, as it's difficult to set up form state in tests directly, we test only the other functions' logic.
+    })();
+  </script>
+</body>
+</html>

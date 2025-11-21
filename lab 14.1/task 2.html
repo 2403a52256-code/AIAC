@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Product Card Demo</title>
+  <style>
+    :root {
+      --primary: #006d77;
+      --accent: #ffb703;
+      --bg: #f7f7f7;
+      --card-bg: #fff;
+      --shadow: 0 2px 10px rgba(0,0,0,0.1);
+      --radius: 0.8em;
+      --transition: 0.25s cubic-bezier(.45,.05,.55,.95);
+      --font-body: 'Roboto', Arial, sans-serif;
+      --font-heading: 'Playfair Display', serif;
+      --toast-bg: rgba(34,34,34,0.96);
+      --toast-color: #fff;
+      --focus-outline: 2px solid var(--accent);
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
+
+    body {
+      background: var(--bg);
+      min-height: 100vh;
+      font-family: var(--font-body);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 1.5em;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 350px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      overflow: hidden;
+      transition: box-shadow var(--transition), transform var(--transition);
+      font-family: var(--font-body);
+    }
+    .product-card:hover,
+    .product-card:focus-within {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.13);
+      transform: translateY(-2px) scale(1.01);
+    }
+
+    .product-card__image {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      background: #eee;
+      display: block;
+      transition: filter var(--transition);
+    }
+    .product-card:hover .product-card__image,
+    .product-card:focus-within .product-card__image {
+      filter: brightness(0.94) saturate(1.07);
+    }
+
+    .product-card__info {
+      padding: 1.1em 1.3em 1em 1.3em;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      gap: .6em;
+    }
+
+    .product-card__title {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 0;
+      color: #233;
+      line-height: 1.2;
+    }
+    .product-card__price {
+      font-size: 1.13rem;
+      color: var(--primary);
+      font-weight: 500;
+      margin: 0 0 .7em 0;
+    }
+
+    .product-card__add {
+      display: flex;
+      margin-top: auto;
+    }
+
+    .product-card__btn {
+      width: 100%;
+      background: var(--primary);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 1.08rem;
+      font-weight: 500;
+      padding: 0.65em 1.2em;
+      border: none;
+      border-radius: 0.4em;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      outline: none;
+    }
+    .product-card__btn:focus {
+      outline: var(--focus-outline);
+      outline-offset: 1px;
+      background: var(--accent);
+      color: #222;
+    }
+    .product-card__btn:hover {
+      background: var(--accent);
+      color: #222;
+    }
+    .product-card__btn:active {
+      filter: brightness(0.93);
+    }
+
+    /* Toast styles */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 2.5em;
+      transform: translateX(-50%);
+      background: var(--toast-bg);
+      color: var(--toast-color);
+      padding: 1em 2em;
+      border-radius: 2em;
+      font-size: 1.05rem;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity 0.35s, visibility 0.35s;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+      min-width: 190px;
+      text-align: center;
+    }
+    .toast--visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .product-card {
+        max-width: 98vw;
+      }
+      .product-card__info {
+        padding: 0.93em 0.8em 0.7em 0.8em;
+      }
+      .toast {
+        width: 95vw;
+        min-width: unset;
+        max-width: 98vw;
+        padding: .7em 0.5em;
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="product-card">
+    <img
+      src="data:image/webp;base64,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"
+      alt="Handcrafted Wooden Lamp"
+      class="product-card__image"
+    >
+    <div class="product-card__info">
+      <h2 class="product-card__title">Handcrafted Wooden Lamp</h2>
+      <p class="product-card__price">$59.99</p>
+      <div class="product-card__add">
+        <button 
+          class="product-card__btn" 
+          type="button" 
+          aria-label="Add Handcrafted Wooden Lamp to cart"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div 
+    id="toast" 
+    class="toast" 
+    role="alert" 
+    aria-live="polite" 
+    aria-atomic="true"
+  ></div>
+
+  <script>
+    const addBtn = document.querySelector('.product-card__btn');
+    const toast = document.getElementById('toast');
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('toast--visible');
+      // Remove previous timeout if any
+      if (toast.toastTimeout) clearTimeout(toast.toastTimeout);
+      toast.toastTimeout = setTimeout(() => {
+        toast.classList.remove('toast--visible');
+      }, 2000);
+    }
+
+    addBtn.addEventListener('click', () => {
+      showToast('Added "Handcrafted Wooden Lamp" to your cart.');
+      addBtn.focus();
+    });
+
+    // ESC key closes toast
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "Escape" && toast.classList.contains('toast--visible')) {
+        toast.classList.remove('toast--visible');
+      }
+    });
+  </script>
+</body>
+</html>
